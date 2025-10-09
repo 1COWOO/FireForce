@@ -1,0 +1,2 @@
+on load:
+	send "에@흐 챗지피티는 이거도 못만드나" to console

@@ -1,0 +1,3 @@
+command /kusakabe:
+	trigger:
+		set player's flight mode to true
