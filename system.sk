@@ -1,2 +1,16 @@
 on load:
 	send "에@흐 챗지피티는 이거도 못만드나" to console
+on tab complete of "/reset":
+	set tab completions for position 1 to "tamaki" and "kusakabe"
+command /ability <string>:
+	trigger:
+		if arg 1 is "tamaki": 
+			if {tamaki::%uuid of player%} is true:
+				send "&a[시스템] &e'tamaki' &c태그가 이미 부여되어있습니다." to player
+				play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+			else:
+				set {tamaki::%uuid of player%} to true
+				send "&a[시스템] &e'tamaki' &b태그가 부여되었습니다." to player
+				play sound "ITEM_FLINTANDSTEEL_USE" to player
+on tab complete of "/ability":
+	set tab completions for position 1 to "tamaki" and "kusakabe"
