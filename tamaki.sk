@@ -16,7 +16,6 @@ on click:
 			make the player shoot a fireball at speed 0.7
 			delete {nekofire::%uuid of player%}
 on damage:
-
 	if attacker is sprinting:
 		if {tamaki::%uuid of attacker%} is true:
 			set {nekofire::%uuid of attacker%} to true
@@ -26,16 +25,6 @@ on damage:
 					damage loop-entity by 3 with cause fire
 					play sound "ENTITY_CAT_HISS" to attacker
 					delete {nekofire::%uuid of attacker%}
-command /reset:
-	trigger:
-		remove fire resistance from player
-		remove speed from player
-		remove jump boost from player
-		delete {tamaki::%uuid of player%}
-		delete {nekofire::%uuid of player%}
-		send "&a[시스템] &e'tamaki 관련 모든' &c태그가 삭제되었습니다." to player
-		play sound "BLOCK_FIRE_EXTINGUISH" to player
-		set player's safe fall distance attribute to 3
 every 10 ticks:
 	loop all players:
 		if {tamaki::%uuid of loop-player%} is true:
