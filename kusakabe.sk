@@ -1,5 +1,0 @@
-every 1 ticks:
-	loop all players:
-		if {kusakabe::%uuid of loop-player%} is true:
-			set loop-player's flight mode to true
-			draw 7 of flame at loop-player with offset vector(2, 2, 2) with extra 1
