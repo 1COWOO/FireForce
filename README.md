@@ -11,6 +11,7 @@
 2. [스크립트 애드온 Skbee](https://modrinth.com/plugin/skbee)를 가장 최신 버전용으로 다운받아 서버 폴더의 `plugins/`폴더에 옮겨주세요.
 3. 서버를 껐다가 다시 시작해주세요.
 4. [현재 이 페이지](https://github.com/1cowoo/FireForce/)에서 main을 누르고 master로 전환해 초록색 "Code" 버튼을 누른후 "Download Zip"을 누릅니다.
+5. 다운로드 받은 압축 파일 압축을 푼 후
 
 ### 주의점 
 1. 유튜브와 같은 플랫폼에서 사용할시 이 깃허브 링크 혹은 [유튜브 채널](https://youtube.com/@KOWOO코우)을 영상 설명창에 써주세요.
