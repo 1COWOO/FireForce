@@ -12,7 +12,7 @@
 3. 서버를 껐다가 다시 시작해주세요.
 4. [현재 이 페이지](https://github.com/1cowoo/FireForce/)에서 main을 누르고 master로 전환해 초록색 "Code" 버튼을 누른후 "Download Zip"을 누릅니다.
 5. 다운로드 받은 압축 파일 압축을 푼 후 나온 폴더인 `FireForce-master/`안에 있는 모든 파일을 서버 폴더의 `plugins/Skript/scripts` 폴더에 옮겨주세요.
-6. 서버에서 `/sk reload scripts`를 한 후 마음껏 플레이 해주세요!
+6. 서버에서 `/sk reload scripts` 명령어를 사용한 후 마음껏 플레이 해주세요!
 
 ### 주의점 
 1. 유튜브와 같은 플랫폼에서 사용할시 이 깃허브 링크 혹은 [유튜브 채널](https://youtube.com/@KOWOO코우)을 영상 설명창에 써주세요.
