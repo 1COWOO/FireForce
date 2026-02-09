@@ -8,7 +8,7 @@
 ### 적용법(서버 여는 방법은 아시죠?)
 ~~제발 파란색은 보통 링크니까 눌러볼 생각을 해보세요~~
 1. [스크립트 깃허브 Releases](https://github.com/SkriptLang/Skript/releases)에서 버전 Skript-2.13.2.jar을 받아 서버 폴더의 `plugins/` 폴더에 옮겨주세요.
-2. [스크립트 애드온 Skbee](https://modrinth.com/plugin/skbee)를 가장 최신 버전용으로 다운받아 서버 폴더의 `plugins/`폴더에 옮겨주세요.
+2. [스크립트 애드온 Skbee](https://modrinth.com/plugin/skbee)를 3.16.1 버전으로 다운받아 서버 폴더의 `plugins/`폴더에 옮겨주세요.
 3. 서버를 껐다가 다시 시작해주세요.
 4. [이거의 메인 스크립트](https://github.com/1COWOO/FireForce/archive/refs/heads/master.zip)를 받아주세요.
 5. 다운로드 받은 압축 파일 압축을 푼 후 나온 폴더인 `FireForce-master/`안에 있는 모든 파일을 서버 폴더의 `plugins/Skript/scripts` 폴더에 옮겨주세요.
