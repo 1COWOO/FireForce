@@ -1,0 +1,31 @@
+on sneak toggle:
+	if player is sneaking:
+		if {tamaki::%uuid of player%} is true:
+			set {nekofire::%uuid of player%} to true
+			loop living entities in radius 4.5 around player:
+				if loop-entity is not player:
+					draw 10 of lava at loop-entity with offset vector(0.5, 2, 0.5) with extra 2
+					set loop-entity on fire for 5 seconds 
+					damage loop-entity by 1
+					play sound "BLOCK_FIRE_AMBIENT" to player
+					delete {nekofire::%uuid of player%}
+on click:
+	if {tamaki::%uuid of player%} is true:
+		if player is sneaking:
+			set {nekofire::%uuid of player%} to true
+			play sound "ENTITY_BLAZE_SHOOT" to player
+			make the player shoot a fireball at speed 0.7
+			delete {nekofire::%uuid of player%}
+on damage:
+	if {tamaki::%uuid of attacker%} is true:
+		if attacker is sprinting:
+			set {nekofire::%uuid of attacker%} to true
+			loop living entities in radius 5.5 around attacker:
+				if loop-entity is not attacker:
+					set loop-entity on fire for 5 seconds
+					damage loop-entity by 3
+					play sound "ENTITY_CAT_HISS" with volume 1000 with pitch 0.7 to attacker
+					draw 10 of sweep_attack at loop-entity with offset vector(0.1, 3, 0.1) with extra 0.7
+					delete {nekofire::%uuid of attacker%}
+			
+		

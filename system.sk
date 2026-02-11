@@ -1,0 +1,90 @@
+on load:
+	send "에@흐 챗지피티는 이거도 못만드나" to console
+on tab complete of "/reset" or "/ability":
+	set tab completions for position 1 to "tamaki" and "kusakabe"
+command /ability <string>:
+	trigger:
+		if arg 1 is "tamaki": 
+			if {tamaki::%uuid of player%} is true:
+				send "&a[시스템] &e'tamaki' &c능력이 이미 부여되어있습니다." to player
+				play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+				apply infinite speed 3 without particles to player
+				apply infinite jump boost 3 without particles to player
+				set player's safe fall distance attribute to 999999999
+			else:
+				set {tamaki::%uuid of player%} to true
+				send "&a[시스템] &e'tamaki' &b능력이 부여되었습니다." to player
+				play sound "ITEM_FLINTANDSTEEL_USE" to player
+		else if arg 1 is "kusakabe":
+			if {kusakabe::%uuid of player%} is true:
+				send "&a[시스템] &e'kusakabe' &c능력이 이미 부여되어있습니다." to player
+				play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+			else:
+				set {kusakabe::%uuid of player%} to true
+				apply infinite fire resistance 255 without particles to player
+				send "&a[시스템] &e'kusakabe' &b능력이 부여되었습니다." to player
+				play sound "ITEM_FLINTANDSTEEL_USE" to player
+				give 1 of goat horn named "&c능력 사용" to player
+		else:
+			send "&a[시스템] &e'존재하지 않는 능력' &c입니다." to player
+			play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+command /reset [<string>]:
+	trigger:
+		if arg 1 is set:
+			if arg 1 is "tamaki":
+				if {tamaki::%uuid of player%} is true:
+					remove fire resistance from player
+					remove speed from player
+					remove jump boost from player
+					delete {tamaki::%uuid of player%}
+					delete {nekofire::%uuid of player%}
+					send "&a[시스템] &e'tamaki' &c능력이 부여 해제 됐습니다." to player
+					play sound "BLOCK_FIRE_EXTINGUISH" to player
+					set player's safe fall distance attribute to 3
+				else:
+					send "&a[시스템] &e'tamaki' &c능력이 부여돼 있지 않습니다." to player
+					play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+			else if arg 1 is "kusakabe":
+				if {kusakabe::%uuid of player%} is true:
+					remove fire resistance from player
+					remove fire charge named "&7관전자로 변경" from player's inventory
+					remove goat horn named "&c능력 사용" from player's inventory
+					delete {kusakabe::%uuid of player%}
+					delete {kusakabe_ab::%uuid of player%}
+					delete {kusakabe_cooldown::%uuid of player%}
+					delete {spectator_used::%uuid of player%}
+
+					send "&a[시스템] &e'kusakabe' &c능력이 부여 해제 됐습니다." to player
+					play sound "BLOCK_FIRE_EXTINGUISH" to player
+					if player's gamemode is not creative:
+						set player's flight mode to false
+				else:
+					send "&a[시스템] &e'kusakabe' &c능력이 부여돼 있지 않습니다." to player
+					play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+			else:
+				send "&a[시스템] &e'존재하지 않는 능력' &c입니다." to player
+				play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+
+		else:
+			delete {tamaki::%uuid of player%}
+			delete {nekofire::%uuid of player%}
+			delete {kusakabe::%uuid of player%}
+			delete {kusakabe_ab::%uuid of player%}
+			delete {kusakabe_cooldown::%uuid of player%}
+			delete {spectator_used::%uuid of player%}
+			set player's safe fall distance attribute to 3
+			remove goat horn named "&c능력 사용" from player's inventory
+			remove fire charge named "&7관전자로 변경" from player's inventory
+			play sound "BLOCK_FIRE_EXTINGUISH" to player
+			send "&a[시스템] &e'모든' &c능력이 부여 해제 됐습니다." to player
+			if player's gamemode is not creative:
+				set player's flight mode to false
+			clear all the potion effects of player
+			execute console command "/attribute %uuid of player% minecraft:movement_speed base reset"
+on right click:
+	if player's tool is fire charge:
+		if name of player's tool is "&7관전자로 변경":
+			cancel event
+			send "&a[시스템] &e'화염구' &c사용이 금지 돼있습니다." to player
+			play sound "ENTITY_VILLAGER_NO" to player
+

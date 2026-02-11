@@ -1,0 +1,70 @@
+every 2 ticks:
+	loop all players:
+		if {kusakabe_ab::%uuid of loop-player%} is true:
+			draw 100 of flame at loop-player with delta vector(0.125, 0.125, 0.125) with extra 0
+on damage:
+    if {kusakabe_ab::%uuid of attacker%} is true:
+        if attacker is player:
+            set {_target} to victim
+            set {_uuid} to uuid of {_target}
+
+            set {_target} on fire for 5 seconds
+            damage {_target} by 1.5
+            set {_target}'s movement speed attribute to 0
+
+            play sound "ENTITY_GENERIC_EXPLODE" with volume 1000 with pitch 2 to attacker and {_target}
+            play sound "ITEM_MACE_SMASH_GROUND_HEAVY" with volume 1000 with pitch 0.5 to attacker and {_target}
+            play sound "ENTITY_FIREWORK_ROCKET_TWINKLE_FAR" with volume 1000 with pitch 0.65 to attacker and {_target}
+            draw 1 of explosion_emitter at {_target} with offset vector(0.1, 3, 0.1) with extra 0.7
+
+            wait 2.5 seconds
+            if {_target} is alive:
+                execute console command "/attribute %{_uuid}% minecraft:movement_speed base reset"
+on swap hand items:
+	if {kusakabe::%uuid of player%} is true:
+		if name of player's tool is "&c능력 사용":
+			cancel event
+			if {kusakabe_ab::%uuid of player%} is true:
+				stop
+			if {kusakabe_cooldown::%uuid of player%} is set:
+				set {_waited} to difference between {kusakabe_cooldown::%uuid of player%} and now
+				if {_waited} is less than 15 seconds:
+					set {_remaining} to 15 seconds
+					remove {_waited} from {_remaining}
+					set {_r_int} to round(seconds of {_remaining})
+					send "&a시스템] &f능력 재사용까지 &e%{_r_int}%초 &f남았습니다." to player
+					stop
+			set player's flight mode to true
+			set {kusakabe_ab::%uuid of player%} to true
+			set {spectator_used::%uuid of player%} to false
+			if player does not have fire charge named "&7관전자로 변경":
+				give all fire charge named "&7관전자로 변경" to player
+			wait 10 seconds
+			if {spectator_used::%uuid of player%} is false:
+				if {kusakabe_ab::%uuid of player%} is true:
+					set {kusakabe_ab::%uuid of player%} to false
+					set player's flight mode to false
+					remove 1 of fire charge named "&7관전자로 변경" from player's inventory
+					set {kusakabe_cooldown::%uuid of player%} to now
+
+		if name of player's tool is "&7관전자로 변경":
+			cancel event
+			set {spectator_used::%uuid of player%} to true
+			remove 1 of fire charge named "&7관전자로 변경" from player's inventory
+			loop 10 times:
+				set {_loc} to location of player 
+				add 2 to y-coordinate of {_loc}
+				make 10 of block particle using light blue wool at {_loc} with offset vector(0.5, 0.4, 0.5) with extra 1
+			set {original_gm::%uuid of player%} to player's gamemode
+			set player's gamemode to spectator
+			wait 3 seconds
+			loop 10 times:
+				set {_loc} to location of player
+				add 2 to y-coordinate of {_loc}
+				make 10 of block particle using light blue wool at {_loc} with offset vector(0.5, 0.4, 0.5) with extra 1
+			set player's gamemode to {original_gm::%uuid of player%}
+			set player's flight mode to true
+			wait 3 seconds
+			set {kusakabe_ab::%uuid of player%} to false
+			set player's flight mode to false
+			set {kusakabe_cooldown::%uuid of player%} to now
