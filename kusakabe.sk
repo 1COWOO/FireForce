@@ -32,7 +32,7 @@ on swap hand items:
 					set {_remaining} to 15 seconds
 					remove {_waited} from {_remaining}
 					set {_r_int} to round(seconds of {_remaining})
-					send "&a시스템] &f능력 재사용까지 &e%{_r_int}%초 &f남았습니다." to player
+					send "&a[시스템] <#9A5CC6>능력 재사용까지 &e%{_r_int}%초 <#9A5CC6>남았습니다." to player
 					stop
 			set player's flight mode to true
 			set {kusakabe_ab::%uuid of player%} to true

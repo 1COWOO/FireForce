@@ -8,13 +8,14 @@ command /ability <string>:
 			if {tamaki::%uuid of player%} is true:
 				send "&a[시스템] &e'tamaki' &c능력이 이미 부여되어있습니다." to player
 				play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
-				apply infinite speed 3 without particles to player
-				apply infinite jump boost 3 without particles to player
-				set player's safe fall distance attribute to 999999999
 			else:
 				set {tamaki::%uuid of player%} to true
 				send "&a[시스템] &e'tamaki' &b능력이 부여되었습니다." to player
 				play sound "ITEM_FLINTANDSTEEL_USE" to player
+				apply infinite speed 3 without particles to player
+				apply infinite jump boost 3 without particles to player
+				apply infinite fire resistance 255 without particles to player
+				set player's safe fall distance attribute to 999999999
 		else if arg 1 is "kusakabe":
 			if {kusakabe::%uuid of player%} is true:
 				send "&a[시스템] &e'kusakabe' &c능력이 이미 부여되어있습니다." to player
@@ -81,10 +82,40 @@ command /reset [<string>]:
 				set player's flight mode to false
 			clear all the potion effects of player
 			execute console command "/attribute %uuid of player% minecraft:movement_speed base reset"
+command /abilities:
+	trigger:
+		set {_gui} to chest inventory with 2 rows named "&b[능력 선택]"
+		clear inventory of {_gui}
+		if {kusakabe::%uuid of player%} is not set:
+			set slot 2 of {_gui} to goat horn named "&c쿠사카베"
+		else if {kusakabe::%uuid of player%} is true:
+			set slot 2 of {_gui} to goat horn with enchantment glint named "&c쿠사카베 &e(현재 선택됨)"
+		if {tamaki::%uuid of player%} is not set:
+			set slot 6 of {_gui} to fire charge named "&6타마키"
+		else if {tamaki::%uuid of player%} is true:
+			set slot 6 of {_gui} to fire charge with enchantment glint named "&6타마키 &e(현재 선택됨)"
+		set slot 17 of {_gui} to barrier named "&4메뉴 닫기" with lore "&c클릭하여 메뉴 닫기"
+		open {_gui} to player
+on inventory click:
+	if event-inventory's name is "&b[능력 선택]":
+		cancel event
+		if clicked slot = 17:
+			close player's inventory
+		if clicked slot = 2:
+			if {kusakabe::%uuid of player%} is true:
+				execute player command "/reset kusakabe"
+			else if {kusakabe::%uuid of player%} is not set:
+				execute player command "/ability kusakabe"
+			execute player command "/abilities"
+		if clicked slot = 6:
+			if {tamaki::%uuid of player%} is true:
+				execute player command "/reset tamaki"
+			else if {kusakabe::%uuid of player%} is not set:
+				execute player command "/ability tamaki"
+			execute player command "/abilities"
 on right click:
 	if player's tool is fire charge:
 		if name of player's tool is "&7관전자로 변경":
 			cancel event
 			send "&a[시스템] &e'화염구' &c사용이 금지 돼있습니다." to player
 			play sound "ENTITY_VILLAGER_NO" to player
-
