@@ -50,7 +50,7 @@ function resetAbility(p: player, type: string):
 			send "&a[시스템] &c보유 중인 능력이 아닙니다." to {_p}
 			play sound "ENTITY_PLAYER_ATTACK_CRIT" to {_p}
 			stop
-		remove speed, jump boost from {_p}
+		remove speed and jump boost from {_p}
 		delete {ability::tamaki::%uuid of {_p}%}
 		delete {nekofire::%uuid of {_p}%}
 		set {_p}'s safe fall distance attribute to 3

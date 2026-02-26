@@ -47,7 +47,7 @@ on swap hand items:
 				set {_r} to loop-number * 0.5 
 				loop 20 times:
 					set {_a} to (loop-number-2 * 18)
-					set {_p} to {_origin}.clone()
+					set {_p} to {_origin}
 					add ({_r} * cos({_a})) to x-coordinate of {_p}
 					add ({_r} * sin({_a})) to z-coordinate of {_p}
 					make 1 of dust using dustOption(purple, 1) at {_p} with offset vector(0, 0, 0) with extra 0 
