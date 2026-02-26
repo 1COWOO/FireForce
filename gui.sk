@@ -9,5 +9,10 @@ function openGUI(p: player):
 		set slot 6 of {_gui} to fire charge named "&6타마키"
 	else if {ability::tamaki::%uuid of {_p}%} is true:
 		set slot 6 of {_gui} to fire charge with enchantment glint named "&6타마키 &e(현재 선택됨)"
+	if {ability::iris::%uuid of {_p}%} is not set:
+		set slot 4 of {_gui} to end crystal named "&d아이리스"
+	else if {ability::iris::%uuid of {_p}%} is true:
+		set slot 4 of {_gui} to end crystal with enchantment glint named "&d아이리스 &e(현재 선택됨)"
+
 	set slot 17 of {_gui} to barrier named "&4메뉴 닫기" with lore "&c클릭하여 메뉴 닫기"
 	open {_gui} to {_p}

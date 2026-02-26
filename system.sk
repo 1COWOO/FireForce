@@ -13,6 +13,8 @@ function giveAbility(p: player, type: string):
 		set {_p}'s safe fall distance attribute to 999999999
 	else if {_type} is "kusakabe":
 		give 1 of goat horn named "&c능력 사용" to {_p}
+	else if {_type} is "iris":
+		give 1 of end crystal named "&d능력 사용" to {_p}
 	else:
 		send "&a[시스템] &e'%{_type}%'&c은 존재하지 않는 능력 입니다." to {_p}
 		play sound "ENTITY_PLAYER_ATTACK_CRIT" to {_p}
@@ -32,10 +34,17 @@ function resetAbility(p: player, type: string):
 		delete {ability::tamaki::%uuid of {_p}%}
 		delete {ability::kusakabe::%uuid of {_p}%}
 		delete {ability::iris::%uuid of {_p}%}
+		delete {iris_cooldown::%uuid of {_p}%}
 		delete {nekofire::%uuid of {_p}%}
 		delete {kusakabe_ab::%uuid of {_p}%}
 		delete {kusakabe_cooldown::%uuid of {_p}%}
+		execute console command "team leave %{_p}%"
 		remove fire resistance from {_p}
+		remove goat horn named "&c능력 사용" from {_p}'s inventory
+		remove fire charge named "&7관전자로 변경" from {_p}'s inventory
+		remove end crystal named "&d능력 사용" from {_p}'s inventory
+		play sound "BLOCK_FIRE_EXTINGUISH" to {_p}
+		stop
 	else if {_type} is "tamaki":
 		if {ability::tamaki::%uuid of {_p}%} is not set:
 			send "&a[시스템] &c보유 중인 능력이 아닙니다." to {_p}
@@ -58,6 +67,19 @@ function resetAbility(p: player, type: string):
 		delete {kusakabe_cooldown::%uuid of {_p}%}
 		delete {spectator_used::%uuid of {_p}%}
 		remove fire resistance from {_p}
+	else if {_type} is "iris":
+		if {ability::iris::%uuid of {_p}%} is not set:
+			send "&a[시스템] &c보유 중인 능력이 아닙니다." to {_p}
+			play sound "ENTITY_PLAYER_ATTACK_CRIT" to {_p}
+			stop
+		remove end crystal named "&d능력 사용" from {_p}'s inventory
+		delete {ability::iris::%uuid of {_p}%}
+		delete {iris_cooldown::%uuid of {_p}%}
+		remove fire resistance from {_p}
+		remove glowing from {_p}
+		remove resistance from {_p}
+		execute console command "team leave %{_p}%"
+
 	else:
 		send "&a[시스템] &e'%{_type}%'&c은 존재하지 않는 능력 입니다." to {_p}
 		play sound "ENTITY_PLAYER_ATTACK_CRIT" to {_p}
@@ -92,6 +114,12 @@ on inventory click:
 			else if {ability::kusakabe::%uuid of player%} is not set:
 				giveAbility(player, "kusakabe")
 			openGUI(player)
+		if clicked slot = 4:
+			if {ability::iris::%uuid of player%} is true:
+				resetAbility(player, "iris")
+			else if {ability::iris::%uuid of player%} is not set:
+				giveAbility(player, "iris")
+			openGUI(player)
 		if clicked slot = 6:
 			if {ability::tamaki::%uuid of player%} is true:
 				resetAbility(player, "tamaki")
@@ -109,8 +137,5 @@ on right click:
 			cancel event
 			send "&a[시스템] &e'엔드 크리스탈' &c사용이 금지 돼있습니다." to player
 			play sound "ENTITY_VILLAGER_NO" to player
-
-
-
-
-
+on death of player:
+	resetAbility(victim, "all")
