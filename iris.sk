@@ -3,26 +3,36 @@ on swap hand items:
 		if name of player's tool is "&d능력 사용":
 			cancel event
 			
-			# 쿨타임 체크 (20초)
+			# 1. 쿨타임 체크
 			if {iris_cooldown::%uuid of player%} is set:
 				set {_waited} to difference between {iris_cooldown::%uuid of player%} and now
 				if {_waited} is less than 20 seconds:
 					set {_remaining} to 20 seconds
 					remove {_waited} from {_remaining}
 					set {_r_int} to round(seconds of {_remaining})
-					send "&a[시스템] <#9A5CC6>능력 재사용까지 &e%{_r_int}%초 <#9A5CC6>남았습니다." to player
+					send "&a[시스템] <#D29EEB>능력 재사용까지 &e%{_r_int}%초 <#D29EEB>남았습니다." to player
+					play sound "entity.experience_orb.pickup" to player
+
 					stop
 
-			# 팀 설정 및 효과 부여 (30초 지속)
+			# 2. 중복 실행 방지 (이미 지속 중이면 실행 안 되게)
+			if {iris_active::%uuid of player%} is true:
+				send "&a[시스템] &c이미 능력이 활성화되어 있습니다!" to player
+				play sound "ENTITY_PLAYER_ATTACK_CRIT" to player
+				stop
+
+			set {iris_active::%uuid of player%} to true
+
+			# 3. 팀 설정 및 효과 부여
 			execute console command "team add purple"
-			execute console command "team modify purple color purple"
+			execute console command "team modify purple color light_purple"
 			loop all players:
 				if {ability::iris::%uuid of loop-player%} is true:
 					execute console command "team join purple %loop-player%"
 					apply glowing 3 without particles to loop-player for 30 seconds
 					apply resistance 3 without particles to loop-player for 30 seconds
 
-			# 스킬 연출
+			# 4. 스킬 연출 (생략 없이 그대로 사용)
 			set {_origin} to location of player
 			add 0.2 to y-coordinate of {_origin}
 			set {_x} to x-coordinate of {_origin}
@@ -45,6 +55,8 @@ on swap hand items:
 					wait 1 tick
 			
 			play sound "entity.generic.explode" with volume 0.7 with pitch 1.8 to player
-			
-			# 쿨타임 기록
+
+			# 5. [핵심] 30초 대기 후 쿨타임 시작
+			wait 30 seconds
+			delete {iris_active::%uuid of player%}
 			set {iris_cooldown::%uuid of player%} to now

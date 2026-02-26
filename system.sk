@@ -35,11 +35,11 @@ function resetAbility(p: player, type: string):
 		delete {ability::kusakabe::%uuid of {_p}%}
 		delete {ability::iris::%uuid of {_p}%}
 		delete {iris_cooldown::%uuid of {_p}%}
+		delete {iris_active::%uuid of {_p}%}
 		delete {nekofire::%uuid of {_p}%}
 		delete {kusakabe_ab::%uuid of {_p}%}
 		delete {kusakabe_cooldown::%uuid of {_p}%}
 		execute console command "team leave %{_p}%"
-		remove fire resistance from {_p}
 		remove goat horn named "&c능력 사용" from {_p}'s inventory
 		remove fire charge named "&7관전자로 변경" from {_p}'s inventory
 		remove end crystal named "&d능력 사용" from {_p}'s inventory
@@ -75,6 +75,7 @@ function resetAbility(p: player, type: string):
 		remove end crystal named "&d능력 사용" from {_p}'s inventory
 		delete {ability::iris::%uuid of {_p}%}
 		delete {iris_cooldown::%uuid of {_p}%}
+		delete {iris_active::%uuid of {_p}%}
 		remove fire resistance from {_p}
 		remove glowing from {_p}
 		remove resistance from {_p}
