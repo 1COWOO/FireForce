@@ -1,0 +1,13 @@
+function openGUI(p: player):
+	set {_gui} to chest inventory with 2 rows named "&b[능력 선택]"
+	clear inventory of {_gui}
+	if {ability::kusakabe::%uuid of {_p}%} is not set:
+		set slot 2 of {_gui} to goat horn named "&c쿠사카베"
+	else if {ability::kusakabe::%uuid of {_p}%} is true:
+		set slot 2 of {_gui} to goat horn with enchantment glint named "&c쿠사카베 &e(현재 선택됨)"
+	if {ability::tamaki::%uuid of {_p}%} is not set:
+		set slot 6 of {_gui} to fire charge named "&6타마키"
+	else if {ability::tamaki::%uuid of {_p}%} is true:
+		set slot 6 of {_gui} to fire charge with enchantment glint named "&6타마키 &e(현재 선택됨)"
+	set slot 17 of {_gui} to barrier named "&4메뉴 닫기" with lore "&c클릭하여 메뉴 닫기"
+	open {_gui} to {_p}

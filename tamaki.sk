@@ -1,6 +1,6 @@
 on sneak toggle:
 	if player is sneaking:
-		if {tamaki::%uuid of player%} is true:
+		if {ability::tamaki::%uuid of player%} is true:
 			set {nekofire::%uuid of player%} to true
 			loop living entities in radius 4.5 around player:
 				if loop-entity is not player:
@@ -10,14 +10,14 @@ on sneak toggle:
 					play sound "BLOCK_FIRE_AMBIENT" to player
 					delete {nekofire::%uuid of player%}
 on click:
-	if {tamaki::%uuid of player%} is true:
+	if {ability::tamaki::%uuid of player%} is true:
 		if player is sneaking:
 			set {nekofire::%uuid of player%} to true
 			play sound "ENTITY_BLAZE_SHOOT" to player
 			make the player shoot a fireball at speed 0.7
 			delete {nekofire::%uuid of player%}
 on damage:
-	if {tamaki::%uuid of attacker%} is true:
+	if {ability::tamaki::%uuid of attacker%} is true:
 		if attacker is sprinting:
 			set {nekofire::%uuid of attacker%} to true
 			loop living entities in radius 5.5 around attacker:

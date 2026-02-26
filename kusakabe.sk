@@ -3,25 +3,25 @@ every 2 ticks:
 		if {kusakabe_ab::%uuid of loop-player%} is true:
 			draw 100 of flame at loop-player with delta vector(0.125, 0.125, 0.125) with extra 0
 on damage:
-    if {kusakabe_ab::%uuid of attacker%} is true:
-        if attacker is player:
-            set {_target} to victim
-            set {_uuid} to uuid of {_target}
+	if {kusakabe_ab::%uuid of attacker%} is true:
+		if attacker is player:
+			set {_target} to victim
+			set {_uuid} to uuid of {_target}
 
-            set {_target} on fire for 5 seconds
-            damage {_target} by 1.5
-            set {_target}'s movement speed attribute to 0
+			set {_target} on fire for 5 seconds
+			damage {_target} by 1.5
+			set {_target}'s movement speed attribute to 0
 
-            play sound "ENTITY_GENERIC_EXPLODE" with volume 1000 with pitch 2 to attacker and {_target}
-            play sound "ITEM_MACE_SMASH_GROUND_HEAVY" with volume 1000 with pitch 0.5 to attacker and {_target}
-            play sound "ENTITY_FIREWORK_ROCKET_TWINKLE_FAR" with volume 1000 with pitch 0.65 to attacker and {_target}
-            draw 1 of explosion_emitter at {_target} with offset vector(0.1, 3, 0.1) with extra 0.7
+			play sound "ENTITY_GENERIC_EXPLODE" with volume 1000 with pitch 2 to attacker and {_target}
+			play sound "ITEM_MACE_SMASH_GROUND_HEAVY" with volume 1000 with pitch 0.5 to attacker and {_target}
+			play sound "ENTITY_FIREWORK_ROCKET_TWINKLE_FAR" with volume 1000 with pitch 0.65 to attacker and {_target}
+			draw 1 of explosion_emitter at {_target} with offset vector(0.1, 3, 0.1) with extra 0.7
 
-            wait 2.5 seconds
-            if {_target} is alive:
-                execute console command "/attribute %{_uuid}% minecraft:movement_speed base reset"
+			wait 2.5 seconds
+			if {_target} is alive:
+				execute console command "/attribute %{_uuid}% minecraft:movement_speed base reset"
 on swap hand items:
-	if {kusakabe::%uuid of player%} is true:
+	if {ability::kusakabe::%uuid of player%} is true:
 		if name of player's tool is "&c능력 사용":
 			cancel event
 			if {kusakabe_ab::%uuid of player%} is true:
@@ -38,7 +38,7 @@ on swap hand items:
 			set {kusakabe_ab::%uuid of player%} to true
 			set {spectator_used::%uuid of player%} to false
 			if player does not have fire charge named "&7관전자로 변경":
-				give all fire charge named "&7관전자로 변경" to player
+				give fire charge named "&7관전자로 변경" to player
 			wait 10 seconds
 			if {spectator_used::%uuid of player%} is false:
 				if {kusakabe_ab::%uuid of player%} is true:
